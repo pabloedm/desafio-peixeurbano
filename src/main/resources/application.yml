@@ -18,4 +18,3 @@ spring:
     user: admin
     password: password
     locations: classpath:/db/migration
-    outOfOrder: true
