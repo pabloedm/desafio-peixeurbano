@@ -24,7 +24,7 @@ public class Deal {
     private ZonedDateTime publishDate;
     private ZonedDateTime endDate;
     private String url;
-    private Long totalSold;
+    private Long totalSold = 0L;
     private DealTypeEnum type;
 
     @Id
@@ -56,7 +56,7 @@ public class Deal {
         this.text = text;
     }
 
-    @Column(name = "create_date")
+    @Column(name = "create_date", updatable = false)
     public ZonedDateTime getCreateDate() {
         return createDate;
     }

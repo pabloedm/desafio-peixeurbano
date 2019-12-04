@@ -24,6 +24,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.MysqldConfig;
 import com.wix.mysql.config.SchemaConfig;
@@ -40,6 +41,8 @@ public class BaseControllerEnviroment {
     protected TestRestTemplate restTemplate;
     @Autowired
     private Flyway flyway;
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     private static EmbeddedMysql embeddedMysql;
 

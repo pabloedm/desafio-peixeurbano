@@ -1,5 +1,6 @@
 package com.peixeurbano.pablo.desafio.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ public class DealService {
     @Autowired
     private DealRepository dealRepository;
 
-    public void insert() {
-
+    public Integer insert(Deal deal) {
+        deal.setCreateDate(ZonedDateTime.now());
+        deal.setUrl(deal.getTitle().replaceAll(" ", "+"));
+        return dealRepository.save(deal).getId();
     }
 
     public void update() {
