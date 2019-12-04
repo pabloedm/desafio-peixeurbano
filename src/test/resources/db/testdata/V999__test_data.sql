@@ -1,0 +1,2 @@
+INSERT INTO deal (id, title, text, create_date, publish_date, end_date, url, total_sold, type) VALUES
+	(1, 'Frigideira de Alumínio', 'Frigideira de Alumínio com Revestimento Cerâmico de 20cm, 24cm ou 28cm.', '2019-12-04 21:00:00', '2019-12-04 22:00:00', '2019-12-14 21:00:00', '/frigideira+de+aluminio', 0, 'PRODUCT');

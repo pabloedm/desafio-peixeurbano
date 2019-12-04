@@ -1,0 +1,10 @@
+spring:
+   datasource:
+      url: jdbc:mysql://localhost:3309/peixeurbano
+      username: test
+      password: test
+   flyway:
+      url: jdbc:mysql://localhost:3309/peixeurbano
+      user: test
+      password: test
+      locations: classpath:/db/migration, classpath:/db/testdata

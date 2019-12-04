@@ -1,6 +1,6 @@
 package com.peixeurbano.pablo.desafio;
 
-import static com.wix.mysql.distribution.Version.v8_0_17;
+import static com.wix.mysql.distribution.Version.v5_7_19;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -45,13 +45,13 @@ public class BaseControllerEnviroment {
 
     @BeforeClass
     public static void _setupBeforeClass() throws IOException {
-        MysqldConfig config = MysqldConfig.aMysqldConfig(v8_0_17)
+        MysqldConfig config = MysqldConfig.aMysqldConfig(v5_7_19)
                 .withPort(3309)
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
                 .withUser("test", "test")
                 .build();
 
-        SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("hub").build();
+        SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("peixeurbano").build();
 
         embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
                 .addSchema(schemaConfig)

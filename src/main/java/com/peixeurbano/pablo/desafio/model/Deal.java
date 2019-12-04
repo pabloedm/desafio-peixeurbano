@@ -56,7 +56,7 @@ public class Deal {
         this.text = text;
     }
 
-    @Column(name = "created_date")
+    @Column(name = "create_date")
     public ZonedDateTime getCreateDate() {
         return createDate;
     }
