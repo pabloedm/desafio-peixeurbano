@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.peixeurbano.pablo.desafio.BaseControllerEnviroment;
 import com.peixeurbano.pablo.desafio.dto.DealDTO;
 
-public class DealControllerTest extends BaseControllerEnviroment {
+class DealControllerTest extends BaseControllerEnviroment {
 
     @Test
     public void listShouldReturnOK() {
