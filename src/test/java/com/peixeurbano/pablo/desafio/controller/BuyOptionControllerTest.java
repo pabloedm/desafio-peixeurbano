@@ -16,4 +16,10 @@ public class BuyOptionControllerTest extends BaseControllerEnviroment {
         assertEquals(HttpStatus.OK, forEntity.getStatusCode());
     }
 
+    @Test
+    public void sellUnitShouldReturnOK() {
+        final ResponseEntity<String> forEntity = restTemplate.postForEntity("http://localhost:" + port + "/v1/buyOptions/1/sellUnit", null, String.class);
+        assertEquals(HttpStatus.OK, forEntity.getStatusCode());
+    }
+
 }

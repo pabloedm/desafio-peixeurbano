@@ -3,6 +3,8 @@ package com.peixeurbano.pablo.desafio.service;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,14 @@ public class BuyOptionService {
         buyOptionRepository.deleteById(id);
     }
 
+    @Transactional
     public void sellUnit(Integer id) {
         BuyOption buyOption = buyOptionRepository.findById(id).orElseThrow(() -> new DesafioBusinessException("buy_option_not_found"));
         ZonedDateTime now = ZonedDateTime.now();
         if (now.isAfter(buyOption.getDeal().getEndDate())) {
             throw new DesafioBusinessException("deal_is_expired");
         }
-        if (now.isAfter(buyOption.getEndDate())) {
+        if (buyOption.getEndDate() != null && now.isAfter(buyOption.getEndDate())) {
             throw new DesafioBusinessException("buy_option_is_expired");
         }
         if (NumberUtils.LONG_ZERO.equals(buyOption.getQuantityCoupon())) {

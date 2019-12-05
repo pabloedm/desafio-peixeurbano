@@ -26,7 +26,7 @@ public class BuyOptionController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/v1/groupOptions/{id}/sellUnit")
+    @PostMapping("/v1/buyOptions/{buyOptionId}/sellUnit")
     public void sellUnit(@PathVariable Integer buyOptionId) {
         buyOptionService.sellUnit(buyOptionId);
     }
