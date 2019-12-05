@@ -1,14 +1,17 @@
 package com.peixeurbano.pablo.desafio.model;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.peixeurbano.pablo.desafio.enumeration.DealTypeEnum;
@@ -26,6 +29,7 @@ public class Deal {
     private String url;
     private Long totalSold = 0L;
     private DealTypeEnum type;
+    private List<BuyOption> buyOptions;
 
     @Id
     @Column(name = "id")
@@ -109,6 +113,15 @@ public class Deal {
 
     public void setType(DealTypeEnum type) {
         this.type = type;
+    }
+
+    @OneToMany(mappedBy = "deal", fetch = FetchType.LAZY)
+    public List<BuyOption> getBuyOptions() {
+        return buyOptions;
+    }
+
+    public void setBuyOptions(List<BuyOption> buyOptions) {
+        this.buyOptions = buyOptions;
     }
 
 }

@@ -110,4 +110,8 @@ public class BuyOption {
         this.deal = deal;
     }
 
+    public void decreaseCoupon() {
+        this.quantityCoupon--;
+    }
+
 }
