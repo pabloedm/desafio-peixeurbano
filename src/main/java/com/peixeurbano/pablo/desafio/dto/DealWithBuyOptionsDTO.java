@@ -2,20 +2,22 @@ package com.peixeurbano.pablo.desafio.dto;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peixeurbano.pablo.desafio.enumeration.DealTypeEnum;
 import com.peixeurbano.pablo.desafio.model.Deal;
 
-public class DealDTO {
+public class DealWithBuyOptionsDTO {
 
     private Deal deal;
 
-    public DealDTO() {
+    public DealWithBuyOptionsDTO() {
         deal = new Deal();
     }
 
-    public DealDTO(Deal deal) {
+    public DealWithBuyOptionsDTO(Deal deal) {
         this.deal = deal;
     }
 
@@ -86,6 +88,10 @@ public class DealDTO {
 
     public long getExpiration() {
         return ChronoUnit.DAYS.between(deal.getPublishDate(), deal.getEndDate());
+    }
+
+    public List<BuyOptionDTO> getBuyOptions() {
+        return deal.getBuyOptions().stream().map(BuyOptionDTO::new).collect(Collectors.toList());
     }
 
 }

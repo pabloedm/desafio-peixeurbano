@@ -9,7 +9,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.peixeurbano.pablo.desafio.DesafioBusinessException;
+import com.peixeurbano.pablo.desafio.exception.DesafioBusinessException;
 import com.peixeurbano.pablo.desafio.model.BuyOption;
 import com.peixeurbano.pablo.desafio.repository.BuyOptionRepository;
 import com.peixeurbano.pablo.desafio.repository.DealRepository;

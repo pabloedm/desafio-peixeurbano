@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peixeurbano.pablo.desafio.dto.DealDTO;
+import com.peixeurbano.pablo.desafio.dto.DealWithBuyOptionsDTO;
+import com.peixeurbano.pablo.desafio.exception.NoContentException;
 import com.peixeurbano.pablo.desafio.service.DealService;
 
 @RestController
@@ -28,6 +30,11 @@ public class DealController {
                 .stream()
                 .map(DealDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/v1/deals/{id}")
+    public DealWithBuyOptionsDTO findById(@PathVariable Integer id) {
+        return new DealWithBuyOptionsDTO(dealService.findById(id).orElseThrow(NoContentException::new));
     }
 
     @PostMapping("/v1/deals")

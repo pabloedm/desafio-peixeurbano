@@ -18,13 +18,13 @@ public class DealControllerTest extends BaseControllerEnviroment {
 
     @Test
     public void listShouldReturnOK() {
-        final ResponseEntity<String> forEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals", String.class);
-        assertEquals(HttpStatus.OK, forEntity.getStatusCode());
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals", String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
     public void listShouldReturnCorrectValues() throws JSONException {
-        final ResponseEntity<String> forEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals", String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals", String.class);
         String expected = "[" +
                 "  {" +
                 "    \"createDate\": \"2019-12-04T19:00:00-02:00\"," +
@@ -35,7 +35,8 @@ public class DealControllerTest extends BaseControllerEnviroment {
                 "    \"title\": \"Frigideira de Alumínio\"," +
                 "    \"totalSold\": 0," +
                 "    \"type\": \"PRODUCT\"," +
-                "    \"url\": \"/frigideira+de+aluminio\"" +
+                "    \"url\": \"/frigideira+de+aluminio\"," +
+                "    \"expiration\": 392" +
                 "  }," +
                 "  {" +
                 "    \"createDate\": \"2019-12-04T19:00:00-02:00\"," +
@@ -46,10 +47,11 @@ public class DealControllerTest extends BaseControllerEnviroment {
                 "    \"title\": \"Frigideira de Barro\"," +
                 "    \"totalSold\": 0," +
                 "    \"type\": \"PRODUCT\"," +
-                "    \"url\": \"/frigideira+de+barro\"" +
+                "    \"url\": \"/frigideira+de+barro\"," +
+                "    \"expiration\": 392" +
                 "  }" +
                 "]";
-        JSONAssert.assertEquals(expected, forEntity.getBody(), true);
+        JSONAssert.assertEquals(expected, responseEntity.getBody(), true);
     }
 
     @Test
@@ -79,6 +81,37 @@ public class DealControllerTest extends BaseControllerEnviroment {
         Integer idToDelete = 1;
         final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + idToDelete, HttpMethod.DELETE, null, String.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void findByIdShouldReturnCorrectValues() throws JSONException {
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals/1", String.class);
+        String expected = "{" +
+                "  \"buyOptions\": [" +
+                "    {" +
+                "      \"endDate\": null," +
+                "      \"id\": 1," +
+                "      \"normalPrice\": 100.0," +
+                "      \"percentageDiscount\": 10.0," +
+                "      \"quantityCoupon\": 30," +
+                "      \"salePrice\": 90.0," +
+                "      \"startDate\": \"2019-12-04T21:00:00-02:00\"," +
+                "      \"title\": \"Tamanho 20cm - R$ 90\"" +
+                "    }" +
+                "  ]," +
+                "  \"createDate\": \"2019-12-04T19:00:00-02:00\"," +
+                "  \"endDate\": \"2020-12-31T19:00:00-02:00\"," +
+                "  \"expiration\": 392," +
+                "  \"id\": 1," +
+                "  \"publishDate\": \"2019-12-04T20:00:00-02:00\"," +
+                "  \"text\": \"Frigideira de Alumínio com Revestimento Cerâmico de 20cm, 24cm ou 28cm.\"," +
+                "  \"title\": \"Frigideira de Alumínio\"," +
+                "  \"totalSold\": 0," +
+                "  \"type\": \"PRODUCT\"," +
+                "  \"url\": \"/frigideira+de+aluminio\"" +
+                "}";
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        JSONAssert.assertEquals(expected, responseEntity.getBody(), true);
     }
 
 }

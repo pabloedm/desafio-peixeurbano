@@ -2,13 +2,14 @@ package com.peixeurbano.pablo.desafio.service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.peixeurbano.pablo.desafio.DesafioBusinessException;
+import com.peixeurbano.pablo.desafio.exception.DesafioBusinessException;
 import com.peixeurbano.pablo.desafio.model.Deal;
 import com.peixeurbano.pablo.desafio.repository.BuyOptionRepository;
 import com.peixeurbano.pablo.desafio.repository.DealRepository;
@@ -24,7 +25,7 @@ public class DealService {
     @Transactional
     public Integer insert(Deal deal) {
         deal.setCreateDate(ZonedDateTime.now());
-        deal.setUrl(deal.getTitle().replaceAll(" ", "+"));
+        deal.setUrl(deal.getTitle().replace(" ", "+"));
         return dealRepository.save(deal).getId();
     }
 
@@ -51,6 +52,10 @@ public class DealService {
 
     public List<Deal> findAll() {
         return dealRepository.findAll();
+    }
+
+    public Optional<Deal> findById(Integer id) {
+        return dealRepository.findById(id);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.peixeurbano.pablo.desafio;
+package com.peixeurbano.pablo.desafio.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
