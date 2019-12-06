@@ -18,4 +18,6 @@ public interface BuyOptionRepository extends JpaRepository<BuyOption, Integer> {
     @Modifying
     void setCouponQuantityAndSetEndDate(Integer id, Long actualQuantityCoupon, ZonedDateTime now);
 
+    boolean existsByDealId(Integer dealId);
+
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.peixeurbano.pablo.desafio.BaseControllerEnviroment;
 import com.peixeurbano.pablo.desafio.dto.DealDTO;
 
-class DealControllerTest extends BaseControllerEnviroment {
+public class DealControllerTest extends BaseControllerEnviroment {
 
     @Test
     public void listShouldReturnOK() {
@@ -27,7 +28,7 @@ class DealControllerTest extends BaseControllerEnviroment {
         String expected = "[" +
                 "  {" +
                 "    \"createDate\": \"2019-12-04T19:00:00-02:00\"," +
-                "    \"endDate\": \"2019-12-14T19:00:00-02:00\"," +
+                "    \"endDate\": \"2020-12-31T19:00:00-02:00\"," +
                 "    \"id\": 1," +
                 "    \"publishDate\": \"2019-12-04T20:00:00-02:00\"," +
                 "    \"text\": \"Frigideira de Alumínio com Revestimento Cerâmico de 20cm, 24cm ou 28cm.\"," +
@@ -35,6 +36,17 @@ class DealControllerTest extends BaseControllerEnviroment {
                 "    \"totalSold\": 0," +
                 "    \"type\": \"PRODUCT\"," +
                 "    \"url\": \"/frigideira+de+aluminio\"" +
+                "  }," +
+                "  {" +
+                "    \"createDate\": \"2019-12-04T19:00:00-02:00\"," +
+                "    \"endDate\": \"2020-12-31T19:00:00-02:00\"," +
+                "    \"id\": 2," +
+                "    \"publishDate\": \"2019-12-04T20:00:00-02:00\"," +
+                "    \"text\": \"Frigideira de Barro com Revestimento Cerâmico de 20cm, 24cm ou 28cm.\"," +
+                "    \"title\": \"Frigideira de Barro\"," +
+                "    \"totalSold\": 0," +
+                "    \"type\": \"PRODUCT\"," +
+                "    \"url\": \"/frigideira+de+barro\"" +
                 "  }" +
                 "]";
         JSONAssert.assertEquals(expected, forEntity.getBody(), true);
@@ -53,6 +65,20 @@ class DealControllerTest extends BaseControllerEnviroment {
         DealDTO dto = objectMapper.readValue(json, DealDTO.class);
         final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/v1/deals", dto, String.class);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void deleteShouldReturnOk() {
+        Integer idToDelete = 2;
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + idToDelete, HttpMethod.DELETE, null, String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void deleteWithBuyOptionsShouldReturnBadRequest() {
+        Integer idToDelete = 1;
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + idToDelete, HttpMethod.DELETE, null, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
 }
