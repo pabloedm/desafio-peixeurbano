@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.peixeurbano.pablo.desafio.exception.DesafioBusinessException;
 import com.peixeurbano.pablo.desafio.model.BuyOption;
-import com.peixeurbano.pablo.desafio.model.Deal;
 import com.peixeurbano.pablo.desafio.repository.BuyOptionRepository;
 import com.peixeurbano.pablo.desafio.repository.DealRepository;
 
@@ -56,8 +55,23 @@ public class BuyOptionService {
         dealRepository.increaseTotalSold(id);
     }
 
-    public void update(Deal deal) {
-        // TODO Auto-generated method stub
+    public void update(BuyOption buyOption) {
+        BuyOption buyOptionFromDB = buyOptionRepository.findById(buyOption.getId()).orElseThrow(() -> new DesafioBusinessException("buy_option_not_found"));
+        buyOptionFromDB.setStartDate(buyOption.getStartDate());
+        buyOptionFromDB.setNormalPrice(buyOption.getNormalPrice());
+        buyOptionFromDB.setPercentageDiscount(buyOption.getPercentageDiscount());
+        buyOptionFromDB.setSalePrice(getSalePrice(buyOption.getNormalPrice(), buyOption.getPercentageDiscount()));
+        buyOptionFromDB.setQuantityCoupon(buyOption.getQuantityCoupon());
+        buyOptionFromDB.setTitle(buyOption.getTitle());
+        buyOptionRepository.save(buyOptionFromDB);
+    }
 
+    protected double getSalePrice(double normalPrice, double discount) {
+        return normalPrice - discount / 100 * normalPrice;
+    }
+
+    public void insert(BuyOption buyOption) {
+        buyOption.setSalePrice(getSalePrice(buyOption.getNormalPrice(), buyOption.getPercentageDiscount()));
+        buyOptionRepository.save(buyOption);
     }
 }

@@ -33,6 +33,14 @@ public class DealController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/v1/deals/valid")
+    public List<DealDTO> findAllValidDeals() {
+        return dealService.findAllValidDeals()
+                .stream()
+                .map(DealDTO::new)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/v1/deals/{id}")
     public DealWithBuyOptionsDTO findById(@PathVariable Integer id) {
         return new DealWithBuyOptionsDTO(dealService.findById(id).orElseThrow(NoContentException::new));

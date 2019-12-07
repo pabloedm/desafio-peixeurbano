@@ -61,6 +61,10 @@ public class DealService {
         return dealRepository.findAll();
     }
 
+    public List<Deal> findAllValidDeals() {
+        return dealRepository.findAllValidDeals();
+    }
+
     public Optional<Deal> findById(Integer id) {
         return dealRepository.findById(id);
     }

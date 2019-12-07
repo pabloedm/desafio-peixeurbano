@@ -24,6 +24,12 @@ public class DealControllerTest extends BaseControllerEnviroment {
     }
 
     @Test
+    public void listAllValidDealsShouldReturnOK() {
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals/valid", String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
     public void listShouldReturnCorrectValues() throws JSONException {
         final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/v1/deals", String.class);
         String expected = "[" +
@@ -129,7 +135,7 @@ public class DealControllerTest extends BaseControllerEnviroment {
     }
 
     @Test
-    public void updateDevice() throws Exception {
+    public void updateShouldReturnOk() throws Exception {
         Integer id = 1;
         String json = "  {" +
                 "    \"id\": " + 1 + "," +
