@@ -78,6 +78,13 @@ public class DealControllerTest extends BaseControllerEnviroment {
     }
 
     @Test
+    public void deleteShouldReturnBadRequest() {
+        Integer idToDelete = 99;
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + idToDelete, HttpMethod.DELETE, null, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
     public void deleteWithBuyOptionsShouldReturnBadRequest() {
         Integer idToDelete = 1;
         final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + idToDelete, HttpMethod.DELETE, null, String.class);

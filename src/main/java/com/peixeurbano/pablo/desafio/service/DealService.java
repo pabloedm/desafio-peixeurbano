@@ -42,10 +42,11 @@ public class DealService {
 
     @Transactional
     public void delete(Integer id) {
+        Deal deal = dealRepository.findById(id).orElseThrow(() -> new DesafioBusinessException("cant_find_deal"));
         if (buyOptionRepository.existsByDealId(id)) {
             throw new DesafioBusinessException("cant_delete_deal_with_buy_options");
         }
-        dealRepository.deleteById(id);
+        dealRepository.delete(deal);
     }
 
     @Transactional

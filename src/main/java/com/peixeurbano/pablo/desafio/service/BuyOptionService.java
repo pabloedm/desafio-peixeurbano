@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.peixeurbano.pablo.desafio.exception.DesafioBusinessException;
 import com.peixeurbano.pablo.desafio.model.BuyOption;
+import com.peixeurbano.pablo.desafio.model.Deal;
 import com.peixeurbano.pablo.desafio.repository.BuyOptionRepository;
 import com.peixeurbano.pablo.desafio.repository.DealRepository;
 
@@ -27,7 +28,8 @@ public class BuyOptionService {
     }
 
     public void delete(Integer id) {
-        buyOptionRepository.deleteById(id);
+        BuyOption buyOption = buyOptionRepository.findById(id).orElseThrow(() -> new DesafioBusinessException("buy_option_not_found"));
+        buyOptionRepository.delete(buyOption);
     }
 
     @Transactional
@@ -52,5 +54,10 @@ public class BuyOptionService {
         }
 
         dealRepository.increaseTotalSold(id);
+    }
+
+    public void update(Deal deal) {
+        // TODO Auto-generated method stub
+
     }
 }
