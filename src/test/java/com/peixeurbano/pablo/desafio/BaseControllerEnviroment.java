@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.flywaydb.core.Flyway;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -33,6 +34,7 @@ import com.wix.mysql.config.SchemaConfig;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
+@Ignore
 public class BaseControllerEnviroment {
 
     @LocalServerPort
