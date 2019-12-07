@@ -19,6 +19,8 @@ import com.peixeurbano.pablo.desafio.dto.DealWithBuyOptionsDTO;
 import com.peixeurbano.pablo.desafio.exception.NoContentException;
 import com.peixeurbano.pablo.desafio.service.DealService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class DealController {
 
@@ -26,6 +28,7 @@ public class DealController {
     private DealService dealService;
 
     @GetMapping("/v1/deals")
+    @ApiOperation("Endpoint to list all deals")
     public List<DealDTO> findAll() {
         return dealService.findAll()
                 .stream()
@@ -34,6 +37,7 @@ public class DealController {
     }
 
     @GetMapping("/v1/deals/valid")
+    @ApiOperation("Endpoint to list all valid deals")
     public List<DealDTO> findAllValidDeals() {
         return dealService.findAllValidDeals()
                 .stream()
@@ -42,27 +46,32 @@ public class DealController {
     }
 
     @GetMapping("/v1/deals/{id}")
+    @ApiOperation("Endpoint to search a deal and its buy option by id")
     public DealWithBuyOptionsDTO findById(@PathVariable Integer id) {
         return new DealWithBuyOptionsDTO(dealService.findById(id).orElseThrow(NoContentException::new));
     }
 
     @PostMapping("/v1/deals")
+    @ApiOperation("Endpoint to insert a new deal")
     @ResponseStatus(HttpStatus.CREATED)
     public Integer create(@RequestBody DealDTO dto) {
         return dealService.insert(dto.getDeal());
     }
 
     @PutMapping("/v1/deals/{id}")
+    @ApiOperation("Endpoint to update an existing deal")
     public void update(@RequestBody DealDTO dto) {
         dealService.update(dto.getDeal());
     }
 
     @PostMapping("/v1/deals/{id}/addOption/{optionId}")
+    @ApiOperation("Endpoint to associate a deal with one buy option")
     public void addOption(@PathVariable Integer id, @PathVariable Integer optionId) {
         dealService.addOption(id, optionId);
     }
 
     @DeleteMapping("/v1/deals/{id}")
+    @ApiOperation("Endpoint to delete a deal using id")
     public void delete(@PathVariable Integer id) {
         dealService.delete(id);
     }
