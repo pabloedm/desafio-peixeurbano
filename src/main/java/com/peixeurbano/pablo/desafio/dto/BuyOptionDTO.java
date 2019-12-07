@@ -70,6 +70,10 @@ public class BuyOptionDTO {
         return buyOption.getStartDate();
     }
 
+    public void setStartDate(ZonedDateTime startDate) {
+        buyOption.setStartDate(startDate);
+    }
+
     public ZonedDateTime getEndDate() {
         return buyOption.getEndDate();
     }

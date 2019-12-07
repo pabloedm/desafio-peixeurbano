@@ -84,7 +84,10 @@ public class DealDTO {
         deal.setType(type);
     }
 
-    public long getExpiration() {
+    public Long getExpiration() {
+        if (deal.getPublishDate() == null || deal.getEndDate() == null) {
+            return null;
+        }
         return ChronoUnit.DAYS.between(deal.getPublishDate(), deal.getEndDate());
     }
 

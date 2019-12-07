@@ -34,6 +34,10 @@ public class BuyOptionService {
     @Transactional
     public void sellUnit(Integer id) {
         BuyOption buyOption = buyOptionRepository.findById(id).orElseThrow(() -> new DesafioBusinessException("buy_option_not_found"));
+        if (buyOption.getDeal() == null) {
+            throw new DesafioBusinessException("cant_sell_unit_without_a_deal");
+        }
+
         ZonedDateTime now = ZonedDateTime.now();
         if (now.isAfter(buyOption.getDeal().getEndDate())) {
             throw new DesafioBusinessException("deal_is_expired");
@@ -52,7 +56,7 @@ public class BuyOptionService {
             buyOptionRepository.setCouponQuantity(id, actualQuantityCoupon);
         }
 
-        dealRepository.increaseTotalSold(id);
+        dealRepository.increaseTotalSold(buyOption.getDeal().getId());
     }
 
     public void update(BuyOption buyOption) {
