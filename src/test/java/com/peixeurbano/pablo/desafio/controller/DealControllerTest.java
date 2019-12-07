@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -112,6 +113,29 @@ public class DealControllerTest extends BaseControllerEnviroment {
                 "}";
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         JSONAssert.assertEquals(expected, responseEntity.getBody(), true);
+    }
+
+    @Test
+    public void addBuyOptionShouldReturnOk() {
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/v1/deals/1/addOption/1", null, String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void updateDevice() throws Exception {
+        Integer id = 1;
+        String json = "  {" +
+                "    \"id\": " + 1 + "," +
+                "    \"endDate\": \"2019-12-14T19:00:00-02:00\"," +
+                "    \"publishDate\": \"2019-12-04T20:00:00-02:00\"," +
+                "    \"text\": \"Frigideira de Metal com Revestimento Cerâmico de 20cm, 24cm ou 28cm.\"," +
+                "    \"title\": \"Frigideira de Metal\"," +
+                "    \"type\": \"PRODUCT\"" +
+                "  }";
+        final DealDTO dto = objectMapper.readValue(json, DealDTO.class);
+
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/v1/deals/" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 }

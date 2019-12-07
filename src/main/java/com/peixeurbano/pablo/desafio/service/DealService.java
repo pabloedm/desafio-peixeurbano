@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.peixeurbano.pablo.desafio.exception.DesafioBusinessException;
+import com.peixeurbano.pablo.desafio.model.BuyOption;
 import com.peixeurbano.pablo.desafio.model.Deal;
 import com.peixeurbano.pablo.desafio.repository.BuyOptionRepository;
 import com.peixeurbano.pablo.desafio.repository.DealRepository;
@@ -29,8 +30,14 @@ public class DealService {
         return dealRepository.save(deal).getId();
     }
 
-    public void update() {
-
+    public void update(Deal deal) {
+        Deal dealFromDb = dealRepository.findById(deal.getId()).orElseThrow(() -> new DesafioBusinessException("cant_find_deal"));
+        dealFromDb.setPublishDate(deal.getPublishDate());
+        dealFromDb.setEndDate(deal.getEndDate());
+        dealFromDb.setTitle(deal.getTitle());
+        dealFromDb.setText(deal.getText());
+        dealFromDb.setType(deal.getType());
+        dealRepository.save(dealFromDb);
     }
 
     @Transactional
@@ -38,16 +45,15 @@ public class DealService {
         if (buyOptionRepository.existsByDealId(id)) {
             throw new DesafioBusinessException("cant_delete_deal_with_buy_options");
         }
-
         dealRepository.deleteById(id);
     }
 
-    public void addOption() {
-
-    }
-
-    public void updateTotalSold() {
-
+    @Transactional
+    public void addOption(Integer id, Integer optionId) {
+        Deal deal = dealRepository.findById(id).orElseThrow(() -> new DesafioBusinessException("cant_find_deal"));
+        BuyOption buyOption = buyOptionRepository.findById(optionId).orElseThrow(() -> new DesafioBusinessException("cant_find_buy_option"));
+        buyOption.setDeal(deal);
+        buyOptionRepository.save(buyOption);
     }
 
     public List<Deal> findAll() {

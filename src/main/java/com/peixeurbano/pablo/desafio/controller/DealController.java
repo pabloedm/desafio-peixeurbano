@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,16 @@ public class DealController {
     @ResponseStatus(HttpStatus.CREATED)
     public Integer create(@RequestBody DealDTO dto) {
         return dealService.insert(dto.getDeal());
+    }
+
+    @PutMapping("/v1/deals/{id}")
+    public void update(@RequestBody DealDTO dto) {
+        dealService.update(dto.getDeal());
+    }
+
+    @PostMapping("/v1/deals/{id}/addOption/{optionId}")
+    public void addOption(@PathVariable Integer id, @PathVariable Integer optionId) {
+        dealService.addOption(id, optionId);
     }
 
     @DeleteMapping("/v1/deals/{id}")
